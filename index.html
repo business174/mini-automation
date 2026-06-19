@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>税理士事務所向け かんたん業務自動化 | Mini Automation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+
+        /* ナビゲーション */
+        header {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0066cc;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #0066cc, #00a8e8);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #0066cc;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #00a8e8, #0066cc);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 102, 204, 0.3);
+        }
+
+        /* ヒーロー */
+        .hero {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f0f7 100%);
+            padding: 4rem 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(0, 168, 232, 0.1), rgba(0, 102, 204, 0.05));
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .hero-content h1 .highlight {
+            color: #00a8e8;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00a8e8, #0066cc);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #0066cc;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid #0066cc;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: #f0f7ff;
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* バッジ */
+        .badge {
+            display: inline-block;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #00a8e8;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* セクション共通 */
+        section {
+            padding: 4rem 2rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .section-title p {
+            font-size: 1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* お悩みセクション */
+        .worries {
+            background: white;
+        }
+
+        .worries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .worry-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #00a8e8;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .worry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .worry-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .worry-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .worry-card p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* 特徴セクション */
+        .features {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f0f7 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            border-top: 4px solid #00a8e8;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00a8e8;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #00a8e8, #0066cc);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* サービスセクション */
+        .services {
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            background: white;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 168, 232, 0.1), rgba(0, 102, 204, 0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* コンセプトセクション */
+        .concept {
+            background: linear-gradient(135deg, #1a3a52 0%, #0d5a7a 100%);
+            color: white;
+        }
+
+        .concept-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .concept-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .concept-text p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+        }
+
+        .concept-list {
+            list-style: none;
+        }
+
+        .concept-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .concept-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00a8e8;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* 料金セクション */
+        .pricing {
+            background: white;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f0f7 100%);
+            border: 2px solid #00a8e8;
+            padding: 2.5rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            margin: 2rem auto;
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 32px rgba(0, 102, 204, 0.15);
+        }
+
+        .price-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00a8e8;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .price-features {
+            list-style: none;
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .price-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .price-features li::before {
+            content: '✓';
+            color: #00a8e8;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* フローセクション */
+        .flow {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f0f7 100%);
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .flow-step {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00a8e8, #0066cc);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .flow-step h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .flow-step p {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* CTA セクション */
+        .cta-section {
+            background: linear-gradient(135deg, #1a3a52 0%, #0d5a7a 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-section .btn-primary {
+            background: linear-gradient(135deg, #00a8e8, #0066cc);
+        }
+
+        .cta-note {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 1.5rem;
+        }
+
+        /* FAQ セクション */
+        .faq {
+            background: white;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #1a1a1a;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            color: #00a8e8;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: #00a8e8;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* フッター */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #00a8e8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #00a8e8;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .concept-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ナビゲーション -->
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                Mini Automation
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">4つの特徴</a></li>
+                <li><a href="#services">できること</a></li>
+                <li><a href="#pricing">料金</a></li>
+                <li><a href="#flow">流れ</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+                <li><a href="#contact" class="cta-button">無料相談する</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ヒーロー -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="badge">⚡ 1〜2週間で導入</div>
+                <h1>まずは1業務だけ、<br><span class="highlight">自動化してみませんか？</span></h1>
+                <p>「これ自動化できる？」という相談から大丈夫です。<br>小さく試して、効果が出たら次の業務へ広げられます。</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn-primary">無料相談する →</a>
+                    <a href="#services" class="btn-secondary">自動化できる業務を見る</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero_new.png" alt="業務自動化イメージ">
+            </div>
+        </div>
+    </section>
+
+    <!-- お悩みセクション -->
+    <section class="worries" id="worries">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>こんなお悩みありませんか？</h2>
+                <p>税理士事務所で発生する「あるある」な手間</p>
+            </div>
+            <div class="worries-grid">
+                <div class="worry-card">
+                    <div class="worry-icon">📄</div>
+                    <h3>資料回収が毎月大変</h3>
+                    <p>クライアントからの資料回収が毎月大変で、確認漏れが発生する</p>
+                </div>
+                <div class="worry-card">
+                    <div class="worry-icon">📊</div>
+                    <h3>整理に時間がかかる</h3>
+                    <p>請求書や領収書の整理に時間がかかり、業務が圧迫される</p>
+                </div>
+                <div class="worry-card">
+                    <div class="worry-icon">⌨️</div>
+                    <h3>転記ミスが怖い</h3>
+                    <p>Excelへの転記作業が多く、ミスが怖い</p>
+                </div>
+                <div class="worry-card">
+                    <div class="worry-icon">🔍</div>
+                    <h3>探す時間が長い</h3>
+                    <p>メールやDriveの中から資料を探す時間が長い</p>
+                </div>
+                <div class="worry-card">
+                    <div class="worry-icon">🗂️</div>
+                    <h3>管理方法がバラバラ</h3>
+                    <p>担当者ごとに管理方法がバラバラで、統一が難しい</p>
+                </div>
+                <div class="worry-card">
+                    <div class="worry-icon">💡</div>
+                    <h3>大きなシステムは不要</h3>
+                    <p>大きなシステム導入まではまだ必要ない</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特徴セクション -->
+    <section class="features" id="features">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>Mini Automationが選ばれる理由</h2>
+                <p>大きなDXではなく、現場で使える小さな改善から</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-number">01</div>
+                    <div class="feature-icon">📋</div>
+                    <h3>1業務・1機能から試せる</h3>
+                    <p>大きなシステム導入は不要。まず1つの業務だけ自動化して、効果を実感してから次へ広げられます。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">02</div>
+                    <div class="feature-icon">🔗</div>
+                    <h3>今使っているツールをそのまま活用</h3>
+                    <p>Excel、Google Drive、Gmailを活かしながら、実務に合わせた自動化を作ります。新しいツールの習得は不要です。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">03</div>
+                    <div class="feature-icon">⚡</div>
+                    <h3>AIを使って開発スピードを向上</h3>
+                    <p>AIを活用した小規模ツール開発で、短期間で「まず便利」を体験できる形にします。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-number">04</div>
+                    <div class="feature-icon">✓</div>
+                    <h3>作って終わりにしない</h3>
+                    <p>納品後も現場で使いながら改善。マニュアル作成・初期動作確認まで含めてサポートします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- サービスセクション -->
+    <section class="services" id="services">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>5万円からできること</h2>
+                <p>1業務・1機能から小さく自動化</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📄</div>
+                    <h3>請求書・領収書整理</h3>
+                    <p>PDFやExcelから会社名・金額・支払月を一覧化。手入力ゼロへ。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔔</div>
+                    <h3>資料回収リマインド</h3>
+                    <p>未提出の顧客を抽出し、確認漏れを防止。自動でメール送信も可能。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Excel・CSV整形</h3>
+                    <p>バラバラの形式を統一フォーマットへ変換。転記ミスをゼロに。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🗂️</div>
+                    <h3>Drive整理</h3>
+                    <p>顧客別・月別フォルダへファイルを自動整理。探す時間を削減。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✉️</div>
+                    <h3>メール分類</h3>
+                    <p>資料送付・質問・請求書などを自動分類。受信ボックスをスッキリ。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📈</div>
+                    <h3>進捗管理表作成</h3>
+                    <p>未対応・確認中・完了を見える化。チーム全体の状況を一目で把握。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- コンセプトセクション -->
+    <section class="concept">
+        <div class="section-container">
+            <div class="concept-content">
+                <div class="concept-text">
+                    <h2>大きなDXではなく、<br>現場で使える小さな改善から。</h2>
+                    <p>今使っているExcel、Google Drive、Gmailを活かしながら、実務に合わせた自動化を作ります。AIを活用して小規模ツール開発のスピードを高め、短期間で「まず便利」を体験できる形にします。</p>
+                    <ul class="concept-list">
+                        <li>大きなシステム導入は不要</li>
+                        <li>1業務から試せる</li>
+                        <li>AIを使って開発スピードを向上</li>
+                        <li>作って終わりにしない</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 料金セクション -->
+    <section class="pricing" id="pricing">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>ミニ自動化プラン</h2>
+                <p>まずは1業務だけ自動化して、効果を実感してください</p>
+            </div>
+            <div class="price-card">
+                <h3>1業務・1機能</h3>
+                <div class="price-amount">50,000円〜</div>
+                <div class="price-period">対象：1業務・1機能 ／ 期間目安：1〜2週間程度</div>
+                <ul class="price-features">
+                    <li>業務内容のヒアリング</li>
+                    <li>小規模自動化の設計</li>
+                    <li>GAS／Excel／小規模ツール作成</li>
+                    <li>簡易マニュアル作成</li>
+                    <li>初期動作確認</li>
+                    <li>納品後サポート</li>
+                </ul>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">※内容により別途お見積りとなります。</p>
+                <a href="#contact" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">無料相談する →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- フローセクション -->
+    <section class="flow" id="flow">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>導入の流れ</h2>
+                <p>「これ自動化できる？」という相談から大丈夫です</p>
+            </div>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <h3>無料相談</h3>
+                    <p>困っている業務をお聞きします。</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <h3>範囲確認</h3>
+                    <p>5万円で対応できる範囲を整理します。</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <h3>小規模ツール作成</h3>
+                    <p>実際に使える形で作成します。</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <h3>運用開始</h3>
+                    <p>現場で使いながら改善します。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA セクション -->
+    <section class="cta-section" id="contact">
+        <div class="section-container">
+            <h2>まずは1業務だけ、<br>自動化してみませんか？</h2>
+            <p>「これ自動化できる？」という相談から大丈夫です。<br>小さく試して、効果が出たら次の業務へ広げられます。</p>
+            <div class="cta-buttons">
+                <a href="mailto:info@example.com" class="btn-primary">無料相談する →</a>
+            </div>
+            <div class="cta-note">相談・見積もり無料 ／ 返信は1営業日以内</div>
+        </div>
+    </section>
+
+    <!-- FAQ セクション -->
+    <section class="faq" id="faq">
+        <div class="section-container">
+            <div class="section-title">
+                <h2>よくある質問</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. 制作期間はどのくらいですか？</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        小規模な自動化であれば、1〜2週間で対応可能です。複雑な業務の場合は、ヒアリング後にお見積りさせていただきます。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. 納品後の運用支援はありますか？</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        はい、納品後も現場で使いながら改善を行います。初期動作確認、マニュアル作成、簡易サポートが含まれています。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. どんな業務でも対応できますか？</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        5万円の範囲内で対応できる業務であれば、ほぼ対応可能です。複雑な業務や大規模なシステムが必要な場合は、別途ご相談ください。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q. 税理士事務所以外でも依頼できますか？</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        はい、対応可能です。税理士事務所向けのサービスですが、他の業種からのご依頼もお受けしています。お気軽にご相談ください。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Mini Automation</h4>
+                <p>税理士事務所向けの業務自動化サービス。小さく試して、効果を実感してから次へ広げられます。</p>
+            </div>
+            <div class="footer-section">
+                <h4>サービス</h4>
+                <ul>
+                    <li><a href="#features">特徴</a></li>
+                    <li><a href="#services">できること</a></li>
+                    <li><a href="#pricing">料金</a></li>
+                    <li><a href="#flow">流れ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>その他</h4>
+                <ul>
+                    <li><a href="#faq">よくある質問</a></li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Mini Automation Service. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ アコーディオン
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
